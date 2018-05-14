@@ -20,20 +20,27 @@ startButton.addEventListener("click", function() {
     //sets timer to 30 seconds
     timer.innerText = 30;
     //interval causing timer to decrease
-    setInterval(function(){
+    var timerInterval =  setInterval(function(){
         if (timer.innerText > 0){
-            timer.innerText --;}
+            timer.innerText --;
+        } else {
+            clearInterval(timerInterval)
+        }
     }, 1000);
     //interval for automatic Mole movement
-    setInterval(moveMole, 1000);
+    var moleInterval = setInterval(moveMole, 1000);
     //Countdown for 30 seconds
     setTimeout(function(){alert("Time's Up! You Scored " + scoreBoard.innerText + "!")}, 30000);
     //Set Score Board to be Dynamic
     scoreBoard.innerText = points + " Points";
     //Disable and then program button to be reenabled
     startButton.disabled = true;
+    //Reset gameboard including score, mole speed, and points
     setTimeout(function(){
         startButton.disabled = false;
+        clearInterval(moleInterval);
+        points = 0;
+        mole.style.display = "none";
     }, 30000)
 }
 )
