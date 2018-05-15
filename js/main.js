@@ -46,10 +46,10 @@ startButton.addEventListener("click", function() {
 )
 
 
-//Move the Mole
+//Move the Mole. holes.length-1 instead of 9 allows for dynamic scaling
 function moveMole(){
     mole.style.display = "inline-block";
-    holes[Math.floor(Math.random()*9)].appendChild(mole);
+    holes[Math.floor(Math.random()* (holes.length -1))].appendChild(mole);
 }
 
 //You Got that Damn Mole
