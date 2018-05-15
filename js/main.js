@@ -14,34 +14,42 @@ var scoreBoard = document.querySelector(".points");
 var timer = document.querySelector(".timer");
 var holes = document.querySelectorAll(".hole");
 var points = 0;
+const difficulty = document.getElementById("difficulty");
 
 //Start Button Logic
 startButton.addEventListener("click", function() {
     //sets timer to 30 seconds
     timer.innerText = 30;
-    //interval causing timer to decrease
+    //interval causing timer to decrease and resetting gameboard at end
     var timerInterval =  setInterval(function(){
         if (timer.innerText > 0){
             timer.innerText --;
         } else {
-            clearInterval(timerInterval)
+            clearInterval(timerInterval);
+            startButton.disabled = false;
+            clearInterval(moleInterval);
+            points = 0;
+            mole.style.display = "none";
+            alert("Time's Up! You Scored " + scoreBoard.innerText + "!");
         }
     }, 1000);
-    //interval for automatic Mole movement
-    var moleInterval = setInterval(moveMole, 1000);
-    //Countdown for 30 seconds
-    setTimeout(function(){alert("Time's Up! You Scored " + scoreBoard.innerText + "!")}, 30000);
+    //interval for automatic Mole movement (implementing difficulty as well)
+    var moleSpeed = null;
+        switch(difficulty.value){
+            case "easy":
+                moleSpeed = 1000;
+                break
+            case "medium":
+                moleSpeed = 750;
+                break
+            case "hard":
+                moleSpeed = 400
+        }
+    var moleInterval = setInterval(moveMole, moleSpeed);
     //Set Score Board to be Dynamic
     scoreBoard.innerText = points + " Points";
-    //Disable and then program button to be reenabled
+    //Disable button during game
     startButton.disabled = true;
-    //Reset gameboard including score, mole speed, and points
-    setTimeout(function(){
-        startButton.disabled = false;
-        clearInterval(moleInterval);
-        points = 0;
-        mole.style.display = "none";
-    }, 30000)
 }
 )
 
